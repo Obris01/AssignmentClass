@@ -1,0 +1,66 @@
+﻿@page "/login"
+@inject NavigationManager NavigationManager
+
+<h3>Example Page</h3>
+<button @onclick="NavigateToPage">Go to Another Page</button>
+
+<div class="login-container">
+    <div class="logo">
+        <img src="bookshop-logo.png" alt="Bookshop Logo">
+        <h1>BOOKSHOP</h1>
+    </div>
+    <div class="login-form">
+        <h2>Book Stores Login</h2>
+        <EditForm Model="@loginModel" OnValidSubmit="@HandleLogin">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <InputText type="email" placeholder="email address" @bind-Value="loginModel.Email" />
+            <InputText type="password" placeholder="password" @bind-Value="loginModel.Password" />
+            <button type="submit">Login</button>
+        </EditForm>
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="error-message">@errorMessage</div>
+        }
+    </div>
+</div>
+
+@code {
+
+    private void NavigateToPage()
+    {
+        // Navigate to the specified route
+        NavigationManager.NavigateTo("/login");
+    }
+
+    private LoginModel loginModel = new LoginModel();
+    private string errorMessage = string.Empty;
+
+    // Predefined login details (for demonstration purposes)
+    private readonly string validEmail = "admin@bookshop.com";
+    private readonly string validPassword = "password123";
+
+    private void HandleLogin()
+    {
+        // Check if the entered details match the predefined login details
+        if (loginModel.Email == validEmail && loginModel.Password == validPassword)
+        {
+            // Redirect to dashboard if login is successful
+            NavigationManager.NavigateTo("/dashboard");
+        }
+        else
+        {
+            // Display an error message if the details are wrong
+            errorMessage = "Details are wrong";
+        }
+    }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+    
+    public class LoginModel
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+}
