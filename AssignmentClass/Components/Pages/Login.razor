@@ -1,4 +1,4 @@
-﻿@page "/login"
+﻿@page "/"
 @inject NavigationManager NavigationManager
 
 <h3>Example Page</h3>
@@ -30,7 +30,7 @@
     private void NavigateToPage()
     {
         // Navigate to the specified route
-        NavigationManager.NavigateTo("/login");
+        NavigationManager.NavigateTo("/home");
     }
 
     private LoginModel loginModel = new LoginModel();
